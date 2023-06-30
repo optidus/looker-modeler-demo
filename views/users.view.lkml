@@ -14,6 +14,20 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  dimension: over_21 {
+    label: "Over 21"
+    type: yesno
+    sql:  ${age} > 21;;
+  }
+
+  dimension: age_tier {
+    label: "Age Tier"
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70]
+    style: integer
+    sql: ${age} ;;
+  }
+
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
@@ -40,8 +54,42 @@ view: users {
   }
 
   dimension: email {
-    type: string
+    label: "Email"
     sql: ${TABLE}.email ;;
+    tags: ["email"]
+
+    link: {
+      label: "User Lookup Dashboard"
+      url: "/dashboards-next/ayalascustomerlookupdb?Email={{ value | encode_uri }}"
+      icon_url: "http://www.looker.com/favicon.ico"
+    }
+    action: {
+      label: "Email Promotion to Customer"
+      url: "https://desolate-refuge-53336.herokuapp.com/posts"
+      icon_url: "https://sendgrid.com/favicon.ico"
+      param: {
+        name: "some_auth_code"
+        value: "abc123456"
+      }
+      form_param: {
+        name: "Subject"
+        required: yes
+        default: "Thank you {{ users.name._value }}"
+      }
+      form_param: {
+        name: "Body"
+        type: textarea
+        required: yes
+        default:
+        "Dear {{ users.first_name._value }},
+
+        Thanks for your loyalty to the Look.  We'd like to offer you a 10% discount
+        on your next purchase!  Just use the code LOYAL when checking out!
+
+        Your friends at the Look"
+      }
+    }
+    required_fields: [name, first_name]
   }
 
   dimension: first_name {
@@ -57,6 +105,11 @@ view: users {
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
+  }
+
+  dimension: name {
+    label: "Name"
+    sql: concat(${first_name}, ' ', ${last_name}) ;;
   }
 
   dimension: latitude {
