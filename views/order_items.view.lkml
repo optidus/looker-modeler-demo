@@ -117,16 +117,16 @@ view: order_items {
     sql: ${order_id} ;;
   }
 
-  # measure: first_purchase_count {
-  #   view_label: "Orders"
-  #   type: count_distinct
-  #   sql: ${order_id} ;;
-  #   filters: {
-  #     field: order_facts.is_first_purchase
-  #     value: "Yes"
-  #   }
-  #   drill_fields: [user_id, users.name, users.email, order_id, created_date, users.traffic_source]
-  # }
+  measure: first_purchase_count {
+    view_label: "Orders"
+    type: count_distinct
+    sql: ${order_id} ;;
+    filters: {
+      field: order_facts.is_first_purchase
+      value: "Yes"
+    }
+    drill_fields: [user_id, users.name, users.email, order_id, created_date, users.traffic_source]
+  }
 
   dimension: order_id_no_actions {
     label: "Order ID No Actions"

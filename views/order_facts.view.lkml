@@ -1,7 +1,7 @@
 include: "/models/sudipto-ecomm-demo.model.lkml"
 
 view: order_facts {
-  view_label: "Order Facts"
+  # view_label: "Order Facts"
   derived_table: {
     explore_source: order_items {
       column: order_id {field: order_items.order_id_no_actions }
@@ -15,7 +15,7 @@ view: order_facts {
         sql: RANK() OVER (PARTITION BY user_id ORDER BY created_at) ;;
       }
     }
-    datagroup_trigger: ecommerce_etl
+
   }
 
   dimension: order_id {
