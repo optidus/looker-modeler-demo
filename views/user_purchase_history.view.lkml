@@ -1,9 +1,9 @@
 view: user_purchase_history {
   derived_table: {
     explore_source: order_items {
-      column: user_id { field: users.id }
+      column: user_id { field: order_items.user_id }
       column: order_id {}
-      column: created_date {}
+      column: created_at {field: order_items.created_raw}
       column: product_id {}
       column: category { field: products.category }
       derived_column: order_sequence_number {
@@ -21,7 +21,7 @@ view: user_purchase_history {
     label: "order ID"
     type: number
   }
-  dimension: created_date {
+  dimension: created_at {
     description: ""
     label: "Created date"
     type: date
