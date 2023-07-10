@@ -49,4 +49,11 @@ explore: order_items {
     relationship: many_to_one
     sql_on: ${order_facts.order_id} = ${order_items.order_id} ;;
   }
+
+  join: user_purchase_history {
+    type: left_outer
+    view_label: "User Purchase History"
+    relationship: many_to_one
+    sql_on: ${user_purchase_history.order_id} = ${order_items.order_id} ;;
+  }
 }
