@@ -18,6 +18,7 @@ view: user_purchase_history {
   }
   dimension: order_id {
     description: ""
+    primary_key: yes
     label: "order ID"
     type: number
   }
